@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokročilá konfigurace Nmap | Kategorie DEFAULT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .slide-container {
+            max-width: 1100px;
+            margin: auto;
+            width: 100%;
+        }
+        .card-slide {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+        .terminal-window {
+            background-color: #090d16;
+            color: #d4d4d4;
+            border-left: 4px solid #0ea5e9;
+        }
+        .nav-arrow {
+            font-size: 1.8rem;
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .nav-arrow:hover:not(.disabled) {
+            background-color: #0ea5e9;
+            color: #fff !important;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="slide-container p-3 my-auto">
+        <div class="card card-slide p-4 p-md-5">
+            
+            <div class="text-center mb-4">
+                <h1 class="display-5 fw-bold text-white">Kategorie DEFAULT</h1>
+            </div>
+
+            <hr class="border-secondary border-opacity-50 my-3">
+
+            <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="fw-bold text-warning mb-0"><i class="bi bi-shield-lock-fill me-2"></i>Test #1: Výchozí sken -sC (Metasploitable 2 - 192.168.56.10)</h5>
+                    <span class="badge bg-warning text-dark">Target: Zranitelný cíl</span>
+                </div>
+
+                <div class="terminal-window p-3 rounded font-monospace mb-2" style="font-size: 0.85rem; line-height: 1.45;">
+                    <div class="text-secondary fw-bold"># Příkaz pro spuštění default skenu a jeho kompletní výstup</div>
+                    <div><span class="text-success fw-bold">┌──(kali㉿kali)-[~]</span></div>
+                    <div><span class="text-success fw-bold">└─$</span> <span class="text-warning fw-bold">sudo nmap -sC -oA nmap_default_metasploitable 192.168.56.10</span></div>
+                    <div class="ps-2 my-2 text-light border-start border-secondary" style="max-height: 260px; overflow-y: auto;">
+                        # Nmap 7.99 scan initiated Thu Nov  5 16:15:20 2026 as: /usr/lib/nmap/nmap -sC -oA nmap_default_metasploitable 192.168.56.10<br>
+                        Nmap scan report for 192.168.56.10<br>
+                        Host is up (0.00012s latency).<br>
+                        Not shown: 977 closed tcp ports (reset)<br>
+                        PORT     STATE SERVICE<br>
+                        21/tcp   open  ftp<br>
+                        | ftp-syst: <br>
+                        |   STAT: <br>
+                        | FTP server status:<br>
+                        |      Connected to 192.168.56.20<br>
+                        |      Logged in as ftp<br>
+                        |      TYPE: ASCII<br>
+                        |      No session bandwidth limit<br>
+                        |      Session timeout in seconds is 300<br>
+                        |      Control connection is plain text<br>
+                        |      Data connections will be plain text<br>
+                        |      vsFTPd 2.3.4 - secure, fast, stable<br>
+                        |_End of status<br>
+                        <span class="text-info fw-bold">|_ftp-anon: Anonymous FTP login allowed (FTP code 230)</span><br>
+                        22/tcp   open  ssh<br>
+                        | ssh-hostkey: <br>
+                        |   1024 60:0f:cf:e1:c0:5f:6a:74:d6:90:24:fa:c4:d5:6c:cd (DSA)<br>
+                        |_  2048 56:56:24:0f:21:1d:de:a7:2b:ae:61:b1:24:3d:e8:f3 (RSA)<br>
+                        23/tcp   open  telnet<br>
+                        25/tcp   open  smtp<br>
+                        |_smtp-commands: metasploitable.localdomain, PIPELINING, SIZE 10240000, VRFY, ETRN, STARTTLS, ENHANCEDSTATUSCODES, 8BITMIME, DSN<br>
+                        | ssl-cert: Subject: commonName=ubuntu804-base.localdomain/organizationName=OCOSA/stateOrProvinceName=There is no such thing outside US/countryName=XX<br>
+                        | Not valid before: 2010-03-17T14:07:45<br>
+                        |_Not valid after:  2010-04-16T14:07:45<br>
+                        | sslv2: <br>
+                        |   SSLv2 supported<br>
+                        |   ciphers: <br>
+                        |     SSL2_RC2_128_CBC_EXPORT40_WITH_MD5<br>
+                        |     SSL2_RC4_128_WITH_MD5<br>
+                        |     SSL2_RC2_128_CBC_WITH_MD5<br>
+                        |     SSL2_RC4_128_EXPORT40_WITH_MD5<br>
+                        |     SSL2_DES_192_EDE3_CBC_WITH_MD5<br>
+                        |_    SSL2_DES_64_CBC_WITH_MD5<br>
+                        |_ssl-date: TLS randomness does not represent time<br>
+                        53/tcp   open  domain<br>
+                        | dns-nsid: <br>
+                        |_  bind.version: 9.4.2<br>
+                        80/tcp   open  http<br>
+                        |_http-title: Metasploitable2 - Linux<br>
+                        111/tcp  open  rpcbind<br>
+                        | rpcinfo: <br>
+                        |   program version    port/proto  service<br>
+                        |   100000  2            111/tcp   rpcbind<br>
+                        |   100000  2            111/udp   rpcbind<br>
+                        |   100003  2,3,4       2049/tcp   nfs<br>
+                        |   100003  2,3,4       2049/udp   nfs<br>
+                        |   100005  1,2,3      35060/udp   mountd<br>
+                        |   100005  1,2,3      53405/tcp   mountd<br>
+                        |   100021  1,3,4      43635/udp   nlockmgr<br>
+                        |   100021  1,3,4      53747/tcp   nlockmgr<br>
+                        |   100024  1          40821/udp   status<br>
+                        |_  100024  1          51593/tcp   status<br>
+                        139/tcp  open  netbios-ssn<br>
+                        445/tcp  open  microsoft-ds<br>
+                        512/tcp  open  exec<br>
+                        513/tcp  open  login<br>
+                        514/tcp  open  shell<br>
+                        1099/tcp open  rmiregistry<br>
+                        1524/tcp open  ingreslock<br>
+                        2049/tcp open  nfs<br>
+                        2121/tcp open  ccproxy-ftp<br>
+                        3306/tcp open  mysql<br>
+                        | mysql-info: <br>
+                        |   Protocol: 10<br>
+                        |   Version: 5.0.51a-3ubuntu5<br>
+                        |   Thread ID: 22<br>
+                        |   Capabilities flags: 43564<br>
+                        |   Some Capabilities: SupportsTransactions, Support41Auth, ConnectWithDatabase, LongColumnFlag, SwitchToSSLAfterHandshake, Speaks41ProtocolNew, SupportsCompression<br>
+                        |   Status: Autocommit<br>
+                        |_  Salt: wSz/v'ZrPx.u'^%>E!r=<br>
+                        5432/tcp open  postgresql<br>
+                        |_ssl-date: 2026-11-05T19:21:28+00:00; -1h55m00s from scanner time.<br>
+                        | ssl-cert: Subject: commonName=ubuntu804-base.localdomain/organizationName=OCOSA/stateOrProvinceName=There is no such thing outside US/countryName=XX<br>
+                        | Not valid before: 2010-03-17T14:07:45<br>
+                        |_Not valid after:  2010-04-16T14:07:45<br>
+                        5900/tcp open  vnc<br>
+                        | vnc-info: <br>
+                        |   Protocol version: 3.3<br>
+                        |   Security types: <br>
+                        |_    VNC Authentication (2)<br>
+                        6000/tcp open  X11<br>
+                        6667/tcp open  irc<br>
+                        8009/tcp open  ajp13<br>
+                        |_ajp-methods: Failed to get a valid response for the OPTION request<br>
+                        8180/tcp open  unknown<br>
+                        |_http-favicon: Apache Tomcat<br>
+                        |_http-title: Apache Tomcat/5.5<br>
+                        MAC Address: 08:00:27:1D:13:6D (Oracle VirtualBox virtual NIC)<br><br>
+                        Host script results:<br>
+                        |_clock-skew: mean: -14m39s, deviation: 2h53m21s, median: -1h54m29s<br>
+                        | smb-os-discovery: <br>
+                        |   OS: Unix (Samba 3.0.20-Debian)<br>
+                        |   Computer name: metasploitable<br>
+                        |   NetBIOS computer name: <br>
+                        |   Domain name: localdomain<br>
+                        |   FQDN: metasploitable.localdomain<br>
+                        |_  System time: 2026-11-05T14:20:56-05:00<br>
+                        | smb-security-mode: <br>
+                        |   account_used: &lt;blank&gt;<br>
+                        |   authentication_level: user<br>
+                        |   challenge_response: supported<br>
+                        |_  message_signing: disabled (dangerous, but default)<br>
+                        |_nbstat: NetBIOS name: METASPLOITABLE, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: &lt;unknown&gt; (unknown)<br>
+                        |_smb2-time: Protocol negotiation failed (SMB2)<br><br>
+                        # Nmap done at Thu Nov  5 16:16:40 2026 -- 1 IP address (1 host up) scanned in 80.70 seconds
+                    </div>
+                </div>
+
+                <div class="p-2 px-3 bg-dark rounded border border-secondary border-opacity-50 small text-light opacity-75">
+                    <strong>Vyhodnocení:</strong> Sken odhalil vsFTPd 2.3.4, zastaralé šifry SSLv2, verzi BIND 9.4.2, MySQL 5.0.51a, Apache Tomcat 5.5 a vypsal informace o Samba 3.0.20 s nebezpečně vypnutým podepisováním zpráv. Sken proběhl v čase 80.70 s.
+                </div>
+            </div>
+
+            <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="fw-bold text-success mb-0"><i class="bi bi-shield-check me-2"></i>Test #2: Výchozí sken -sC (Ubuntu Server - 192.168.56.30)</h5>
+                    <span class="badge bg-success text-white">Target: Ubuntu server</span>
+                </div>
+
+                <div class="terminal-window p-3 rounded font-monospace mb-2" style="font-size: 0.85rem; line-height: 1.45;">
+                    <div class="text-secondary fw-bold"># Příkaz a výstup skenu v Nmapu</div>
+                    <div><span class="text-success fw-bold">┌──(kali㉿kali)-[~]</span></div>
+                    <div><span class="text-success fw-bold">└─$</span> <span class="text-warning fw-bold">sudo nmap -sC -oA nmap_default_ubuntu 192.168.56.30</span></div>
+                    <div class="ps-2 my-2 text-light border-start border-secondary">
+                        # Nmap 7.99 scan initiated Thu Nov  5 16:15:27 2026 as: /usr/lib/nmap/nmap -sC -oA nmap_default_ubuntu 192.168.56.30<br>
+                        Nmap scan report for 192.168.56.30<br>
+                        Host is up (0.000019s latency).<br>
+                        Not shown: 999 closed tcp ports (reset)<br><br>
+                        PORT   STATE SERVICE<br>
+                        22/tcp open  ssh<br>
+                        MAC Address: 08:00:27:CF:1B:88 (Oracle VirtualBox virtual NIC)<br><br>
+                        # Nmap done at Thu Nov  5 16:15:32 2026 -- 1 IP address (1 host up) scanned in 5.11 seconds
+                    </div>
+                </div>
+
+                <div class="p-2 px-3 bg-dark rounded border border-secondary border-opacity-50 small text-light opacity-75">
+                    <strong>Vyhodnocení:</strong> Detekován pouze port 22/tcp (SSH). Cíl neposkytuje zbytečné služební informace ani zranitelná rozhraní. Sken proběhl v čase 5.11 s.
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="py-3 px-4 border-top border-secondary border-opacity-25">
+        <div class="container d-flex justify-content-between align-items-center">
+            
+            <a href="brute.html" id="prevBtn" class="btn btn-outline-info nav-arrow">
+                <i class="bi bi-arrow-left"></i>
+            </a>
+
+            <span class="text-muted small">Šipky na klávesnici (&#8592; / &#8594;)</span>
+
+            <a href="discovery.html" id="nextBtn" class="btn btn-outline-info nav-arrow">
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "ArrowLeft") {
+                window.location.href = "brute.html";
+            } else if (e.key === "ArrowRight") {
+                window.location.href = "discovery.html";
+            }
+        });
+    </script>
+</body>
+</html>

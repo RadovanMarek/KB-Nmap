@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokročilá konfigurace Nmap | Kategorie AUTH</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .slide-container {
+            max-width: 1100px;
+            margin: auto;
+            width: 100%;
+        }
+        .card-slide {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+        .terminal-window {
+            background-color: #090d16;
+            color: #d4d4d4;
+            border-left: 4px solid #0ea5e9;
+        }
+        .nav-arrow {
+            font-size: 1.8rem;
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .nav-arrow:hover:not(.disabled) {
+            background-color: #0ea5e9;
+            color: #fff !important;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="slide-container p-3 my-auto">
+        <div class="card card-slide p-4 p-md-5">
+            
+
+            <div class="text-center mb-4">
+                <h1 class="display-5 fw-bold text-white">Kategorie AUTH (Autentizace)</h1>
+            </div>
+
+            <hr class="border-secondary border-opacity-50 my-3">
+
+
+            <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="fw-bold text-warning mb-0"><i class="bi bi-shield-lock-fill me-2"></i>Test #1: Metasploitable 2 (192.168.56.10)</h5>
+                    <span class="badge bg-warning text-dark">Target: Zranitelný cíl</span>
+                </div>
+
+                <div class="terminal-window p-3 rounded font-monospace mb-2" style="font-size: 0.85rem; line-height: 1.45;">
+                    <div class="text-secondary fw-bold"># Příkaz a výstup skenu v Nmapu</div>
+                    <div><span class="text-success fw-bold">┌──(kali㉿kali)-[~]</span></div>
+                    <div><span class="text-success fw-bold">└─$</span> <span class="text-warning fw-bold">sudo nmap --script=auth -oA nmap_auth_metasploitable 192.168.56.10</span></div>
+                    <div class="ps-2 my-2 text-light border-start border-secondary" style="max-height: 260px; overflow-y: auto;">
+                        # Nmap 7.99 scan initiated Thu Nov  5 15:28:54 2026 as: /usr/lib/nmap/nmap --script=auth -oA nmap_auth_metasploitable 192.168.56.10<br>
+                        Nmap scan report for 192.168.56.10<br>
+                        Host is up (0.000077s latency).<br>
+                        Not shown: 977 closed tcp ports (reset)<br>
+                        PORT     STATE SERVICE<br>
+                        21/tcp   open  ftp<br>
+                        <span class="text-info fw-bold">|_ftp-anon: Anonymous FTP login allowed (FTP code 230)</span><br>
+                        22/tcp   open  ssh<br>
+                        | ssh-publickey-acceptance: <br>
+                        |_  Accepted Public Keys: No public keys accepted<br>
+                        | ssh-auth-methods: <br>
+                        |   Supported authentication methods: <br>
+                        |     publickey<br>
+                        |_    password<br>
+                        23/tcp   open  telnet<br>
+                        25/tcp   open  smtp<br>
+                        | smtp-enum-users: <br>
+                        |_  Method RCPT returned a unhandled status code.<br>
+                        53/tcp   open  domain<br>
+                        80/tcp   open  http<br>
+                        111/tcp  open  rpcbind<br>
+                        139/tcp  open  netbios-ssn<br>
+                        445/tcp  open  microsoft-ds<br>
+                        512/tcp  open  exec<br>
+                        513/tcp  open  login<br>
+                        514/tcp  open  shell<br>
+                        1099/tcp open  rmiregistry<br>
+                        1524/tcp open  ingreslock<br>
+                        2049/tcp open  nfs<br>
+                        2121/tcp open  ccproxy-ftp<br>
+                        3306/tcp open  mysql<br>
+                        | mysql-users: <br>
+                        |   debian-sys-maint<br>
+                        |   guest<br>
+                        |_  root<br>
+                        | mysql-empty-password: <br>
+                        <span class="text-info fw-bold">|_  root account has empty password</span><br>
+                        5432/tcp open  postgresql<br>
+                        5900/tcp open  vnc<br>
+                        6000/tcp open  X11<br>
+                        6667/tcp open  irc<br>
+                        8009/tcp open  ajp13<br>
+                        8180/tcp open  unknown<br>
+                        | http-default-accounts: <br>
+                        |   [Apache Tomcat] at /manager/html/<br>
+                        |     <span class="text-warning fw-bold">tomcat:tomcat</span><br>
+                        |   [Apache Tomcat Host Manager] at /host-manager/html/<br>
+                        |_    <span class="text-warning fw-bold">tomcat:tomcat</span><br>
+                        MAC Address: 08:00:27:1D:13:6D (Oracle VirtualBox virtual NIC)<br><br>
+                        Host script results:<br>
+                        | smb-enum-users: <br>
+                        |_  Domain: METASPLOITABLE; Users: backup, bin, bind, daemon, dhcp, distccd, ftp, games, gnats, irc, klog, libuuid, list, lp, mail, man, msfadmin, mysql, news, nobody, postfix, postgres, proftpd, proxy, root, service, sshd, sync, sys, syslog, telnetd, tomcat55, user, uucp, www-data<br><br>
+                        Post-scan script results:<br>
+                        | creds-summary: <br>
+                        |   192.168.56.10: <br>
+                        |     8180/nil: <br>
+                        |       tomcat:tomcat - Valid credentials<br>
+                        |_      tomcat:tomcat - Valid credentials<br>
+                        # Nmap done at Thu Nov  5 15:29:29 2026 -- 1 IP address (1 host up) scanned in 35.62 seconds
+                    </div>
+                </div>
+
+                <div class="p-2 px-3 bg-dark rounded border border-secondary border-opacity-50 small text-light opacity-75">
+                    <strong>Vyhodnocení:</strong> Odhaleno anonymní FTP, prázdné heslo účtu <code>root</code> v MySQL, výchozí přístup <code>tomcat:tomcat</code> na portu 8180 a enumerace uživatelů přes SMB. Sken proběhl v čase 35.62 sekund
+                </div>
+            </div>
+
+            <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="fw-bold text-success mb-0"><i class="bi bi-shield-check me-2"></i>Test #2: Ubuntu Server (192.168.56.30)</h5>
+                    <span class="badge bg-success text-white">Target: Ubuntu server</span>
+                </div>
+
+                <div class="terminal-window p-3 rounded font-monospace mb-2" style="font-size: 0.85rem; line-height: 1.45;">
+                    <div class="text-secondary fw-bold"># Příkaz a výstup skenu v Nmapu</div>
+                    <div><span class="text-success fw-bold">┌──(kali㉿kali)-[~]</span></div>
+                    <div><span class="text-success fw-bold">└─$</span> <span class="text-warning fw-bold">sudo nmap --script=auth -oA nmap_auth_ubuntu 192.168.56.30</span></div>
+                    <div class="ps-2 my-2 text-light border-start border-secondary">
+                        # Nmap scan report for 192.168.56.30<br>
+                        PORT   STATE SERVICE<br>
+                        22/tcp open  ssh<br>
+                        | ssh-auth-methods: Supported authentication methods: publickey, password<br>
+                        |_ssh-publickey-acceptance: Accepted Public Keys: No public keys accepted<br>
+                        # Nmap done at Thu Nov  5 15:29:28 2026 -- 1 IP address scanned in 4.92 seconds
+                    </div>
+                </div>
+
+                <div class="p-2 px-3 bg-dark rounded border border-secondary border-opacity-50 small text-light opacity-75">
+                    <strong>Vyhodnocení:</strong> Detekován pouze port 22 (SSH). Služba vyžaduje platnou autentizaci a neobsahuje žádná nechráněná rozhraní. Sken proběhl v čase 4.92 s.
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+
+    <footer class="py-3 px-4 border-top border-secondary border-opacity-25">
+        <div class="container d-flex justify-content-between align-items-center">
+            
+
+            <a href="index.html" id="prevBtn" class="btn btn-outline-info nav-arrow">
+                <i class="bi bi-arrow-left"></i>
+            </a>
+
+            <span class="text-muted small">Šipky na klávesnici (&#8592; / &#8594;)</span>
+
+
+            <a href="brute.html" id="nextBtn" class="btn btn-outline-info nav-arrow">
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+    </footer>
+
+
+    <script>
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "ArrowLeft") {
+                window.location.href = "index.html";
+            } else if (e.key === "ArrowRight") {
+                window.location.href = "brute.html";
+            }
+        });
+    </script>
+</body>
+</html>

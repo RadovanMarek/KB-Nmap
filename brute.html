@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokročilá konfigurace Nmap | Kategorie BRUTE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .slide-container {
+            max-width: 1100px;
+            margin: auto;
+            width: 100%;
+        }
+        .card-slide {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+        .terminal-window {
+            background-color: #090d16;
+            color: #d4d4d4;
+            border-left: 4px solid #0ea5e9;
+        }
+        .nav-arrow {
+            font-size: 1.8rem;
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .nav-arrow:hover:not(.disabled) {
+            background-color: #0ea5e9;
+            color: #fff !important;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="slide-container p-3 my-auto">
+        <div class="card card-slide p-4 p-md-5">
+            
+            <div class="text-center mb-3">
+                <h1 class="display-5 fw-bold text-white">Kategorie BRUTE</h1>
+            </div>
+
+            <hr class="border-secondary border-opacity-50 my-3">
+
+            <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="fw-bold text-warning mb-0"><i class="bi bi-shield-lock-fill me-2"></i>Test #1: FTP Brute-Force (Metasploitable 2 - 192.168.56.10)</h5>
+                    <span class="badge bg-warning text-dark">Target: Zranitelný cíl</span>
+                </div>
+
+                <div class="terminal-window p-3 rounded font-monospace mb-2" style="font-size: 0.82rem; line-height: 1.4;">
+                    <div class="text-secondary fw-bold"># Příkaz pro spuštění ftp-brute a jeho výstup</div>
+                    <div><span class="text-success fw-bold">┌──(kali㉿kali)-[~]</span></div>
+                    <div><span class="text-success fw-bold">└─$</span> <span class="text-warning fw-bold">sudo nmap -p 21 --script ftp-brute -oA nmap_brute_metasploitable 192.168.56.10</span></div>
+                    <div class="ps-2 my-2 text-light border-start border-secondary">
+                        # Nmap 7.99 scan initiated Thu Nov  5 15:52:46 2026 as: /usr/lib/nmap/nmap -p 21 --script ftp-brute -oA nmap_brute_metasploitable 192.168.56.10<br>
+                        Nmap scan report for 192.168.56.10<br>
+                        Host is up (0.00s latency).<br><br>
+                        PORT   STATE SERVICE<br>
+                        21/tcp open  ftp<br>
+                        <span class="text-info fw-bold">| ftp-brute: <br>
+                        |   Accounts: <br>
+                        |     user:user - Valid credentials<br>
+                        |_  Statistics: Performed 368 guesses in 648 seconds, average tps: 0.7</span><br>
+                        MAC Address: 08:00:27:1D:13:6D (Oracle VirtualBox virtual NIC)<br><br>
+                        # Nmap done at Thu Nov  5 16:03:39 2026 -- 1 IP address (1 host up) scanned in 652.54 seconds
+                    </div>
+                </div>
+
+                <div class="my-3">
+                    <div class="text-center p-2 bg-dark rounded border border-secondary border-opacity-50 mb-2">
+                        <img src="ftp_brute.png" alt="Wireshark FTP Brute Force Capture" class="img-fluid rounded shadow-sm wireshark-img">
+                    </div>
+                </div>
+
+                <div class="p-2 px-3 bg-dark rounded border border-secondary border-opacity-50 small text-light opacity-75">
+                    <strong>Vyhodnocení skenu:</strong> Skript <code>ftp-brute</code> otestoval 368 kombinací během 648 sekund a odhalil platné údaje <strong>user:user</strong>. Wireshark zachytil veškerou komunikaci v plain-textu.
+                </div>
+            </div>
+
+  
+            <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="fw-bold text-success mb-0"><i class="bi bi-shield-check me-2"></i>Test #2: FTP & SSH Brute-Force (Ubuntu Server - 192.168.56.30)</h5>
+                    <span class="badge bg-success text-white">Target: Ubuntu server</span>
+                </div>
+
+                <div class="terminal-window p-3 rounded font-monospace mb-2" style="font-size: 0.82rem; line-height: 1.4;">
+                    <div class="text-secondary fw-bold"># Příkaz pro spuštění skenu na Ubuntu Server a jeho výstup</div>
+                    <div><span class="text-success fw-bold">┌──(kali㉿kali)-[~]</span></div>
+                    <div><span class="text-success fw-bold">└─$</span> <span class="text-warning fw-bold">sudo nmap -p 21,22 --script ftp-brute,ssh-brute -oA nmap_brute_ubuntu 192.168.56.30</span></div>
+                    <div class="ps-2 my-2 text-light border-start border-secondary">
+                        # Nmap 7.99 scan initiated Thu Nov  5 15:52:52 2026 as: /usr/lib/nmap/nmap -p 21,22 --script ftp-brute,ssh-brute -oA nmap_brute_ubuntu 192.168.56.30<br>
+                        Nmap scan report for 192.168.56.30<br>
+                        Host is up (0.00s latency).<br><br>
+                        PORT   STATE  SERVICE<br>
+                        21/tcp closed ftp<br>
+                        22/tcp open   ssh<br>
+                        | ssh-brute: <br>
+                        |   Accounts: No valid accounts found<br>
+                        |_  Statistics: Performed 116 guesses in 621 seconds, average tps: 0.2<br>
+                        MAC Address: 08:00:27:CF:1B:88 (Oracle VirtualBox virtual NIC)<br><br>
+                        # Nmap done at Thu Nov  5 16:03:17 2026 -- 1 IP address (1 host up) scanned in 625.46 seconds
+                    </div>
+                </div>
+
+                <div class="my-3">
+                    <div class="text-center p-2 bg-dark rounded border border-secondary border-opacity-50 mb-2">
+                        <img src="ssh_brute.png" alt="Wireshark SSH Brute Force Capture" class="img-fluid rounded shadow-sm wireshark-img">
+                    </div>
+                </div>
+
+                <div class="p-2 px-3 bg-dark rounded border border-secondary border-opacity-50 small text-light opacity-75">
+                    <strong>Vyhodnocení skenu:</strong> FTP port je uzavřen. Skript <code>ssh-brute</code> otestoval 116 pokusů během 621 sekund a <strong>nenalezl žádná platná hesla</strong>. Rychlost testování (0.2 tps) byla výrazně nižší kvůli režii šifrování SSH.
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="py-3 px-4 border-top border-secondary border-opacity-25">
+        <div class="container d-flex justify-content-between align-items-center">
+            
+            <a href="auth.html" id="prevBtn" class="btn btn-outline-info nav-arrow">
+                <i class="bi bi-arrow-left"></i>
+            </a>
+
+            <span class="text-muted small">Šipky na klávesnici (&#8592; / &#8594;)</span>
+
+            <a href="default.html" id="nextBtn" class="btn btn-outline-info nav-arrow">
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "ArrowLeft") {
+                window.location.href = "auth.html";
+            } else if (e.key === "ArrowRight") {
+                window.location.href = "default.html";
+            }
+        });
+    </script>
+</body>
+</html>

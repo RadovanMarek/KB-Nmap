@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokročilá konfigurace Nmap | Úvod & State of the Art</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .slide-container {
+            max-width: 1100px;
+            margin: auto;
+            width: 100%;
+        }
+        .card-slide {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+        .nav-arrow {
+            font-size: 1.8rem;
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .nav-arrow:hover:not(.disabled) {
+            background-color: #0ea5e9;
+            color: #fff !important;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="slide-container p-3 my-auto">
+        <div class="card card-slide p-4 p-md-5">
+            
+            <div class="text-center mb-4">
+                <h1 class="display-5 fw-bold text-white">Advanced Nmap Configuration</h1>   
+            </div>
+
+            <hr class="border-secondary border-opacity-50 my-3">
+
+            <div class="row g-4">
+                <div class="col-lg-7">
+                    <h3 class="h5 text-warning mb-3"><i class="bi bi-info-circle-fill me-2"></i>1. Úvod</h3>
+                    <p class="text-light fs-6">
+                        Mapování sítě představuje nultou fázi bezpečnostního auditu i penetračního testování. <strong>Nmap (Network Mapper)</strong> slouží k aktivní identifikaci živých uzlů, otevřených TCP/UDP portů, služeb a jejich přesných verzí. Popřípadě pomocí <strong>Nmap Scripting Engine (NSE)</strong> rovnou využít některé zranitelnosti.
+                        Klíčovým prvkem, který umožňuje automatizovat interakci s protokoly pomocí skriptů psaných v jazyce Lua. Výzkumným cílem této práce je srovnatelná analýza výstupů NSE skriptů při spuštění proti dvěma diametrálně odlišným systémům.
+                    </p>
+
+                    <h3 class="h5 text-info mb-3"><i class="bi bi-cpu-fill me-2"></i>2. Současný stav</h3>
+                    <p class="text-light fs-6">
+                        Současný síťový audit již nespočívá pouze v identifikaci otevřených portů. Moderní bezpečnostní analýza se zaměřuje také na identifikaci běžících služeb, jejich verzí, operačních systémů a potenciálních bezpečnostních nedostatků. Jedním ze základních nástrojů používaných k tomuto účelu je Nmap, který kombinuje několik metod aktivního průzkumu sítě. Významnou součástí Nmapu je také Nmap Scripting Engine (NSE), který rozšiřuje možnosti nástroje o automatizované testování a získávání podrobnějších informací. Skripty jsou rozděleny do čtrnácti kategorií.
+                        Dnes se také používá TCP/IP fingerprinting je to technika aktivní identifikace operačního systému vzdáleného zařízení na základě analýzy způsobu, jakým jeho síťová implementace TCP/IP komunikuje s ostatními zařízeními.
+                        Jednotlivé operační systémy totiž mohou stejná síťová pravidla implementovat mírně odlišným způsobem. Rozdíly se mohou projevovat například v hodnotách hlaviček síťových paketů, pořadí TCP voleb, počáteční velikosti TCP okna nebo způsobu generování sekvenčních čísel. Tyto charakteristiky vytvářejí specifický vzorec chování, označovaný jako fingerprint. V rámci této práce se více podíváme na NSE, vyzkoušel jsem skripty z kategorii <strong>auth, brute, default, discovery, exploit</strong>.
+                    </p>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="p-3 rounded bg-dark border border-secondary border-opacity-50 mb-3">
+                        <h6 class="fw-bold text-info mb-2"><i class="bi bi-pc-display-horizontal me-2"></i>Testbed (VirtualBox Host-Only)</h6>
+                        <ul class="list-unstyled mb-0 text-light small">
+                            <li class="mb-2 pb-2 border-bottom border-secondary border-opacity-25">
+                                <strong class="text-primary">Kali Linux (192.168.56.20)</strong><br>
+                                <span class="text-muted">Útočný stroj, generátor skenů a Wireshark.</span>
+                            </li>
+                            <li class="mb-2 pb-2 border-bottom border-secondary border-opacity-25">
+                                <strong class="text-warning">Metasploitable 2 (192.168.56.10)</strong><br>
+                                <span class="text-muted">Záměrně zranitelný cíl (zastaralé služby).</span>
+                            </li>
+                            <li>
+                                <strong class="text-success">Ubuntu Server (192.168.56.30)</strong><br>
+                                <span class="text-muted">Zabezpečený produkční cíl (OpenSSH).</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-3 px-4 border-top border-secondary border-opacity-25">
+        <div class="container d-flex justify-content-between align-items-center">
+            
+            <a href="#" class="btn btn-outline-secondary nav-arrow disabled" tabindex="-1" aria-disabled="true">
+                <i class="bi bi-arrow-left"></i>
+            </a>
+
+            <span class="text-muted small">Šipky na klávesnici (&#8592; / &#8594;)</span>
+
+            <a href="auth.html" id="nextBtn" class="btn btn-outline-info nav-arrow">
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "ArrowRight") {
+                window.location.href = "auth.html";
+            }
+        });
+    </script>
+</body>
+</html>
